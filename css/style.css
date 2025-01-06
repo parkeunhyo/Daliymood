@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'NanumSquareNeo'; /* 폰트 이름 */
-    src: url('./fonts/NANUMSQUARENEO-VARIABLE.TTF') format('truetype'); /* 폰트 경로 */
+    src: url('fonts/NANUMSQUARENEO-VARIABLE.TTF') format('truetype'); /* 폰트 경로 */
     font-weight: normal;
     font-style: normal;
 }
 
 * {
-    font-family: 'NanumSquareNeo', Arial, sans-serif; /* NanumSquareNeo 폰트를 기본으로 설정 */
+    font-family: 'NanumSquareNeo';
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,7 +18,7 @@ body {
 
 
 .header {
-    font-family: 'NanumSquareNeo', Arial, sans-serif; 
+
     background: linear-gradient(to right, #DCF6FF, #02ABFF); /* 왼쪽에서 오른쪽으로 파란색 그라데이션 */
     color: #fff;
     display: flex;
