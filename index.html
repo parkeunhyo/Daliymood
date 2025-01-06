@@ -1,11 +1,70 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테스트 페이지</title>
+    <title>DAILY MOOD</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>테스트 성공</h1>
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo.png" alt="DAILY MOOD 로고" />
+        </div>
+        <nav>
+            <a href="#">플레이리스트</a>
+            <a href="#">로그아웃</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <h2>오늘의 감정을 입력하고 음악을 추천받으세요!</h2>
+            <div class="search-bar">
+                <input type="text" placeholder="감정을 입력하세요">
+                <button id="recommend-btn">추천받기</button>
+            </div>
+        </div>
+
+        <section class="playlist">
+            <h3>추천 플레이리스트</h3>
+            <ul id="recommendation-list">
+                <li>
+                    <span>🎵 Welcome to the Show - DAY6</span>
+                    <button class="heart-btn">❤️</button>
+                </li>
+                <li>
+                    <span>🎵 Blue Moon - 엔플라잉 (N.Flying)</span>
+                    <button class="heart-btn">♡</button>
+                </li>
+                <li>
+                    <span>🎵 우주를 줄게 - 볼빨간사춘기</span>
+                    <button class="heart-btn">♡</button>
+                </li>
+                <li>
+                    <span>🎵 Happy - DAY6</span>
+                    <button class="heart-btn">♡</button>
+                </li>
+            </ul>
+        </section>
+
+        <footer class="player">
+            <div class="now-playing">
+                <span>HAPPY - DAY6</span>
+            </div>
+            <div class="controls">
+                <button>⏮️</button>
+                <button>⏯️</button>
+                <button>⏭️</button>
+            </div>
+            <div class="progress">
+                <span>0:20</span>
+                <input type="range" min="0" max="100" value="20">
+                <span>2:56</span>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
