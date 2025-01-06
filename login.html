@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        @font-face {
+            font-family: 'NanumSquareNeo'; /* 폰트 이름 */
+            src: url('fonts/NANUMSQUARENEO-VARIABLE.TTF') format('truetype'); /* 폰트 경로 */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'NanumSquareNeo';
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #CFF1FF;
+        }
+
+        .box {
+            width: 380px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            font-size: 30px;
+            font-weight: 900;
+            color: #03ABFF;
+            gap: 20px; 
+            padding-top:30px;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 320px;
+            height: 250px;
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+        }
+
+        .input-field {
+            width: 90%;
+            height: 60px;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            background-color: #F6F6F6;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            color: #757575;
+        }
+        .login-btn{
+            background-color: #03ABFF;
+            color:white;
+            font-size:20px;
+            font-weight: bold;
+            width: 90%;
+            height: 60px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            margin: 15px 0 10px;
+            cursor: pointer;
+        }
+        .button-container{
+            display:flex;
+        }
+        .btn{
+            margin-right:10px;
+            border:none;
+            background-color: white;
+            cursor: pointer;
+            color: #757575;
+        }
+        .separator {
+            color: #a5a5a5; /* 구분자 색상 */
+            font-size: 10px;
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('signup-btn').addEventListener('click', function () {
+                window.location.href = 'signup.html'; // signup.html로 이동
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="box">
+        <div>DAILY MOOD</div> 
+        <div class="login-container">
+            <input type="text" class="input-field" placeholder="아이디">
+            <input type="password" class="input-field" placeholder="비밀번호">
+            <button class="login-btn">로그인</button>
+            <div class="button-container">
+                <button class="btn">아이디 찾기</button>
+                <span class="separator">|</span>
+                <button class="btn">비밀번호 찾기</button>
+                <span class="separator">|</span>
+                <button class="btn" id="signup-btn">회원가입</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
