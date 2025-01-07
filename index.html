@@ -119,46 +119,94 @@
         }
 
         .playlist h3 {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2px solid #0EAFFF;
             padding-bottom: 10px;
             margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: 100;
         }
 
         .playlist ul {
             list-style: none;
             padding: 0;
+            max-height: 340px; /* 최대 높이 */
+            overflow-y: auto; /* 스크롤 표시 */
+            scrollbar-width: thin; /* 스크롤바 두께 */
+            scrollbar-color: #ccc #f8f9fa; /* 스크롤바 색상 */
+        }
+        .playlist ul::-webkit-scrollbar {
+            width: 10px; /* 스크롤바 너비 */
+           
+        }
+        
+        .playlist ul::-webkit-scrollbar-thumb {
+            background-color: #ccc; /* 스크롤바 색상 */
+            border-radius: 10px; /* 스크롤바 모서리 둥글게 */
         }
 
         .playlist li {
+            width: 98%;
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1.5px dotted #CACACA;
         }
 
-        .heart-btn {
-            background: none;
+        .heart-btn, .heart-btn.clicked {
+            width: 25px;
+            height: 25px;
+            background-size: cover; /* 아이콘이 버튼 크기에 맞게 조정 */
+            background-repeat: no-repeat;
+            background-position: center;
             border: none;
-            font-size: 1.2em;
             cursor: pointer;
+            background-color: white;
         }
+        
+        
 
         .player {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #fff;
+            position: relative;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%); /* 자기 자신의 너비의 절반만큼 왼쪽으로 이동 */
+            width: 90%;
+            height: 70px;
+            background-color: #f8f9fa;
             padding: 10px 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: left;
             align-items: center;
             border-top: 1px solid #ddd;
+            border-radius: 30px;
+            border: 1px solid #C8C8C8;
+
         }
 
         .now-playing {
-            font-weight: bold;
+            font-weight: 100;
+            display: flex;
+            flex-direction: column;
         }
 
+        .now-playing h3{
+            font-size: 20px;
+            font-weight: 100;
+            margin-bottom: 5px;
+        }
+
+        .now-playing h4{
+            font-size: 15px;
+            font-weight: 100;
+        }
+
+        .playbox{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            margin-top:20px;
+        }
         .controls button {
             font-size: 1.5em;
             background: none;
@@ -167,15 +215,22 @@
         }
 
         .progress {
+            margin-left:50px;
             display: flex;
             align-items: center;
+            width:100%;
+            
         }
 
         .progress input[type="range"] {
             margin: 0 10px;
+            width: 85%;
+
         }
         
     </style>
+    
+    
 </head>
 <body>
     <header class="header">
@@ -207,54 +262,79 @@
             <ul id="recommendation-list">
                 <li>
                     <span>🎵 Welcome to the Show - DAY6</span>
-                    <button class="heart-btn">❤️</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+
                 </li>
                 <li>
                     <span>🎵 Blue Moon - 엔플라잉 (N.Flying)</span>
-                    <button class="heart-btn">♡</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+
                 </li>
                 <li>
                     <span>🎵 우주를 줄게 - 볼빨간사춘기</span>
-                    <button class="heart-btn">♡</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+
                 </li>
                 <li>
                     <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn">♡</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+
                 </li>
                 <li>
                     <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn">♡</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+
                 </li>
                 <li>
                     <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn">♡</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+
                 </li>
                 <li>
                     <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn">♡</button>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <span>🎵 Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
                 </li>
             </ul>
         </section>
 
         <footer class="player">
             <div class="now-playing">
-                <span>HAPPY - DAY6</span>
+                <h3>HAPPY</h3>
+                <h4>DAY6</h4>
             </div>
-            <div class="controls">
-                <button>⏮️</button>
-                <button>⏯️</button>
-                <button>⏭️</button>
-            </div>
-            <div class="progress">
-                <span>0:20</span>
-                <input type="range" min="0" max="100" value="20">
-                <span>2:56</span>
+            <div class="playbox">
+                <div class="progress">
+                    <h4>0:20</h4>
+                    <input type="range" min="0" max="100" value="20">
+                    <h4>2:56</h4>
+                </div>
+                <div class="controls">
+                    <button>⏮️</button>
+                    <button>⏯️</button>
+                    <button>⏭️</button>
+                </div>
             </div>
         </footer>
     </main>
-
     <script>
-
+        const heartButtons = document.querySelectorAll('.heart-btn');
+    
+        heartButtons.forEach(button => {
+            const defaultUrl = button.getAttribute('data-url');
+            const clickedUrl = button.getAttribute('data-clicked-url');
+            button.style.backgroundImage = `url(${defaultUrl})`;
+    
+            button.addEventListener('click', () => {
+                const isClicked = button.classList.toggle('clicked');
+                button.style.backgroundImage = `url(${isClicked ? clickedUrl : defaultUrl})`;
+            });
+        });
     </script>
+    
 </body>
+
 </html>
