@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAILY MOOD</title>
+    <style>
+        /* 폰트 정의 */
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-bRg.woff2') format('woff2'); /* Regular */
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-cBd.woff2') format('woff2'); /* Bold */
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-aLt.woff2') format('woff2'); /* Light */
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-dEb.woff2') format('woff2'); /* Extra Bold */
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-eHv.woff2') format('woff2'); /* Heavy */
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        /* 기본 스타일 */
+        * {
+            font-family: 'NanumSquareNeo', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(to right, #DCF6FF, #02ABFF);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            height: 100px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .btn {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .separator {
+            color: white;
+            font-size: 15px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .search-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        h2 {
+            font-weight: 100;
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-container {
+            position: relative;
+            margin-right: 20px;
+            width: 400px;
+        }
+
+        .input-container input {
+            width: 100%;
+            height: 50px;
+            padding: 10px 45px 10px 15px;
+            font-size: 15px;
+            border-radius: 30px;
+            border: none;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-container .camera-icon {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .search-bar button {
+            width: 110px;
+            padding: 10px 20px;
+            font-size: 17px;
+            background-color: #03ABFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .playlist {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .playlist h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .playlist ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .playlist li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .heart-btn {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .player {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .now-playing {
+            font-weight: bold;
+        }
+
+        .controls button {
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+        }
+
+        .progress input[type="range"] {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="logo.png" alt="DAILY MOOD 로고" />
+        </div>
+        <nav>
+            <button class="btn" id="playlist-btn">플레이리스트</button>
+            <span class="separator">|</span>
+            <button class="btn" id="logout-btn">로그아웃</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <h2>오늘의 감정을 입력하고 음악을 추천받으세요!</h2>
+            <div class="search-bar">
+                <div class="input-container">
+                    <input type="text" placeholder="감정을 입력하세요">
+                    <img class="camera-icon" src="camera.png" alt="카메라">
+                </div>
+                <button id="recommend-btn">추천받기</button>
+            </div>
+        </div>
+
+        <section class="playlist">
+            <h3>추천 플레이리스트</h3>
+            <ul id="recommendation-list">
+                <li>
+                    <span>🎵 Welcome to the Show - DAY6</span>
+                    <button class="heart-btn">❤️</button>
+                </li>
+                <li>
+                    <span>🎵 Blue Moon - 엔플라잉 (N.Flying)</span>
+                    <button class="heart-btn">♡</button>
+                </li>
+                <li>
+                    <span>🎵 우주를 줄게 - 볼빨간사춘기</span>
+                    <button class="heart-btn">♡</button>
+                </li>
+            </ul>
+        </section>
+
+        <footer class="player">
+            <div class="now-playing">
+                <span>HAPPY - DAY6</span>
+            </div>
+            <div class="controls">
+                <button>⏮️</button>
+                <button>⏯️</button>
+                <button>⏭️</button>
+            </div>
+            <div class="progress">
+                <span>0:20</span>
+                <input type="range" min="0" max="100" value="20">
+                <span>2:56</span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
