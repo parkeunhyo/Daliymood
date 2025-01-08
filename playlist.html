@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAILY MOOD 플레이리스트</title>
+    <style>
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-bRg.woff2') format('woff2'); /* Regular */
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareNeo';
+            src: url('./NanumSquareNeo-cBd.woff2') format('woff2'); /* Bold */
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'NanumSquareNeo', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(to right, #DCF6FF, #02ABFF);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            height: 100px;
+            margin-bottom: 50px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .btn {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .separator {
+            color: white;
+            font-size: 15px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .container {
+            margin: 10px auto; /* 가운데 정렬 */
+            padding: 20px;
+            max-width: 1200px; /* 최대 너비 설정 */
+            width: 100%; /* 화면 크기에 따라 변화 */
+            background: white;
+            border-radius: 30px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+        }
+
+        .playlist-header {
+            display: flex; /* 플렉스 박스를 사용해 정렬 */
+            justify-content: space-between; /* 좌우로 텍스트 배치 */
+            align-items: center; /* 세로 가운데 정렬 */
+            width: 100%; /* 부모 박스 너비에 맞춤 */
+            max-width: 1200px; /* 최대 너비 제한 */
+            margin: 0 auto 10px; /* 가운데 정렬 및 하단 여백 */
+            padding: 0 20px; /* 좌우 여백 */
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+        }
+
+        .playlist-title {
+            font-size: 18px; /* 텍스트 크기 */
+            font-weight: bold; /* 텍스트 두께 */
+            color: #333;
+            flex-grow: 1; /* 남은 공간 채우기 */
+            text-align: left; /* 왼쪽 정렬 */
+        }
+
+        .playlist-actions {
+            font-size: 16px;
+            color: #666;
+            cursor: pointer;
+            text-align: right; /* 오른쪽 정렬 */
+        }
+
+        .playlist-title {
+            color: #333;
+        }
+
+        .playlist-actions {
+            color: #666;
+            cursor: pointer;
+        }
+
+        .playlist-header span {
+            font-size: px;
+            font-weight: bold;
+        }
+
+        .folder-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .folder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background-color: #fff; /* 폴더 배경색 */
+    border: 2px solid #ddd; /* 테두리 색상 */
+    border-radius: 15px; /* 둥근 사각형 테두리 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    padding: 10px; /* 내부 여백 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+}
+
+.folder img {
+    width: 80px; /* 폴더 아이콘 크기 */
+    height: auto;
+}
+
+.folder span {
+    margin-top: 10px; /* 텍스트와 아이콘 간격 */
+    font-size: 14px;
+    color: #333; /* 텍스트 색상 */
+}
+
+        .new-folder {
+            opacity: 0.5;
+        }
+
+        .player {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%); /* 자기 자신의 너비의 절반만큼 왼쪽으로 이동 */
+            width: 85%;
+            height: 70px;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            border-radius: 30px;
+            border: 1px solid #C8C8C8;
+
+        }
+
+        .now-playing {
+            font-weight: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .now-playing h3{
+            font-size: 20px;
+            font-weight: 100;
+            margin-bottom: 5px;
+        }
+
+        .now-playing h4{
+            font-size: 15px;
+            font-weight: 100;
+        }
+
+        .playbox{
+            display: flex;
+
+            align-items: center;
+            width: 100%;
+            margin-top:10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 버튼 간 간격 */
+            margin-top:-20px;
+        }
+        /* 버튼 크기 조정 */
+        .control-btn {
+
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px; /* 내부 여백 */
+            border-radius: 50%; /* 둥근 버튼을 원형으로 설정 */
+        }
+
+        /* 아이콘 크기 조정 */
+        .control-btn img.icon {
+            width: 22px; /* 아이콘 너비 */
+            height: 22px; /* 아이콘 높이 */
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width:100%;
+            margin-top:-20px;
+            
+        }
+
+        .progress input[type="range"] {
+            margin: 0 10px;
+            width: 85%;
+
+        }
+
+        .progress h4{
+            font-size:13px;
+            font-weight: 100;
+        }
+        .playlist-btn{
+            width:120px;
+            height: 40px;
+            border: none;
+            border-radius: 30px;
+            background-color: #03ABFF;
+            color:white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px; /* 아이콘과 텍스트 간격 */
+            cursor: pointer;
+            
+        }
+        .playlist-btn img.icon {
+            width: 17px; /* 아이콘 크기 */
+            height: 17px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="logo.png" alt="DAILY MOOD 로고" />
+        </div>
+        <nav>
+            <button class="btn">플레이리스트</button>
+            <span class="separator">|</span>
+            <button class="btn">로그아웃</button>
+        </nav>
+    </header>
+    <div class="playlist-header">
+        <span class="playlist-title">플레이리스트</span>
+    <span class="playlist-actions">삭제 | 추가</span>
+    </div>
+    <div class="container">
+        <div class="folder-container">
+            <div class="folder">
+                <img src="folder.png" alt="폴더">
+                <span>둠칫둠칫</span>
+            </div>
+            <div class="folder">
+                <img src="folder.png" alt="폴더">
+                <span>비오는날</span>
+            </div>
+            <div class="folder">
+                <img src="folder.png" alt="폴더">
+                <span>행복할때</span>
+            </div>
+            <div class="folder">
+                <img src="folder.png" alt="폴더">
+                <span>슬플때</span>
+            </div>
+            <div class="folder new-folder">
+                <img src="newfolder.png" alt="새 폴더">
+                <span>이름을 입력해주세요</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="player">
+        <div class="player-header">
+            <span>HAPPY - DAY6</span>
+            <span>0:20 / 2:56</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="controls">
+            <button>⏮️</button>
+            <button>⏯️</button>
+            <button>⏭️</button>
+        </div>
+    </div>
+    <footer class="player">
+        <div class="playbox">
+            <div class="now-playing">
+                <h3>HAPPY</h3>
+                <h4>DAY6</h4>
+            </div>
+            <div class="progress">
+                <h4>0:20</h4>
+                <input type="range" min="0" max="100" value="20">
+                <h4>2:56</h4>
+            </div>
+            <button class="playlist-btn">
+                <img src="whitenote.png" alt="음표 아이콘" class="icon">
+                둠칫둠칫
+            </button>
+        </div>
+        <div class="controls">
+            <button class="control-btn" id="prev-btn">
+                <img src="previous.png" alt="이전" class="icon">
+            </button>
+            <button class="control-btn" id="play-btn">
+                <img src="play.png" alt="재생" class="icon">
+            </button>
+            <button class="control-btn" id="next-btn">
+                <img src="next.png" alt="다음" class="icon">
+            </button>
+        </div>
+        
+      
+    </footer>
+</body>
+</html>
