@@ -111,7 +111,7 @@
 
         .playlist {
             width: 80%;
-            margin: 20px auto;
+            margin: -20px auto;
             padding: 20px;
             background: white;
             border-radius: 30px;
@@ -132,7 +132,7 @@
             max-height: 340px; /* 최대 높이 */
             overflow-y: auto; /* 스크롤 표시 */
             scrollbar-width: thin; /* 스크롤바 두께 */
-            scrollbar-color: #ccc #f8f9fa; /* 스크롤바 색상 */
+            scrollbar-color: #ccc #ffffff; /* 스크롤바 색상 */
         }
         .playlist ul::-webkit-scrollbar {
             width: 10px; /* 스크롤바 너비 */
@@ -287,7 +287,88 @@
         }
 
 
-                
+        .myplaylist-container {
+            display: none; /* 초기 상태 숨김 */
+            position: fixed;
+            bottom: 20px;
+            left:50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background-color: #EFEFEF;
+            width: 800px;
+            height: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .myplaylist-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0 10px;
+            border-bottom: 1px solid #CACACA
+        }
+
+        .myplaylist-header .icon {
+            margin-right: 8px;
+        }
+
+        .myplaylist-header .title {
+            display: flex;
+            align-items: center;
+        }
+
+        .myplaylist-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .myplaylist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px dashed #CACACA;
+            cursor: pointer;
+        }
+
+        .myplaylist-item:hover {
+            background-color: white;
+        }
+
+        .folder-icon {
+            width:20px;
+            margin-right: 12px;
+        }
+
+        .scrollbar {
+            max-height: 150px;
+            overflow-y: auto;
+            scrollbar-width: thin; /* 스크롤바 두께 */
+            scrollbar-color: #ccc #EFEFEF; /* 스크롤바 색상 */
+        }
+
+
+        .title h3{
+          font-size:20px;
+          font-weight:100;
+          margin-right: 20px;
+        }    
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #4c4c4c;
+            margin-left: auto;
+        }
+        .close-btn:hover {
+            color: #000000; /* 닫기 버튼 hover 효과 */
+        }
     </style>
     
     
@@ -407,8 +488,57 @@
           
         </footer>
     </main>
+    <div class="myplaylist-container" id="myplaylist-modal">
+        <div class="myplaylist-header">
+            <div class="title">
+                <h3>플레이리스트 추가 | </h3>
+                <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                <h3>Welcome to the Show - DAY6</h3>
+            </div>
+            <button class="close-btn">&times;</button>
+            
+        </div>
+        <div class="scrollbar">
+            <ul class="myplaylist-list">
+                <li class="myplaylist-item">
+                    <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                    둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+                <li class="myplaylist-item">
+                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                  둠칫둠칫
+                </li>
+            </ul>
+        </div>
+    </div>
     <script>
         const heartButtons = document.querySelectorAll('.heart-btn');
+        const myPlaylistModal = document.getElementById('myplaylist-modal');
+        const closeButton = document.querySelector('.close-btn');
     
         heartButtons.forEach(button => {
             const defaultUrl = button.getAttribute('data-url');
@@ -418,7 +548,19 @@
             button.addEventListener('click', () => {
                 const isClicked = button.classList.toggle('clicked');
                 button.style.backgroundImage = `url(${isClicked ? clickedUrl : defaultUrl})`;
+
+                //하트 아이콘이 heart.png 상태일 때만 모달 표시하는 조건 추가
+                if (isClicked){
+                    myPlaylistModal.style.display = 'block'; //모달 보이기
+                }
+                else{
+                    myPlaylistModal.style.display = 'none'; // 모달 숨기기
+                }
             });
+        });
+
+        closeButton.addEventListener('click', () => {
+            myPlaylistModal.style.display = 'none'; // 모달 숨기기
         });
 
         const playButton = document.getElementById('play-btn');
@@ -439,6 +581,7 @@
             }
             isPlaying = !isPlaying; // 상태 전환
         });
+
     </script>
     
 </body>
