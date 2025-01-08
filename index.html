@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: 'NanumSquareNeo'; /* 폰트 이름 */
-            src: url('fonts/NANUMSQUARENEO-VARIABLE.TTF') format('truetype'); /* 폰트 경로 */
+            src: url('fonts/NanumSquareNeo-aLt.woff2') format('truetype'); /* 폰트 경로 */
             font-weight: normal;
             font-style: normal;
         }
@@ -147,9 +147,22 @@
         .playlist li {
             width: 98%;
             display: flex;
+            align-items: center; /* 수직 정렬을 가운데로 */
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1.5px dotted #CACACA;
+        }
+        
+        .playlist li span {
+            text-align: left; /* 텍스트를 왼쪽 정렬 */
+            flex: 1; /* 남은 공간을 차지하도록 설정 */
+        }
+        /* 음표 아이콘 스타일 */
+        .note-icon {
+            width: 17px; /* 아이콘 너비 */
+            height: 20px; /* 아이콘 높이 */
+            margin-right: 10px; /* 텍스트와의 간격 */
+            vertical-align: middle; /* 텍스트와 수직 정렬 */
         }
 
         .heart-btn, .heart-btn.clicked {
@@ -166,16 +179,17 @@
         
 
         .player {
-            position: relative;
-            bottom: -10px;
+            position: absolute;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%); /* 자기 자신의 너비의 절반만큼 왼쪽으로 이동 */
-            width: 90%;
+            width: 85%;
             height: 70px;
             background-color: #f8f9fa;
             padding: 10px 20px;
             display: flex;
-            justify-content: left;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             border-top: 1px solid #ddd;
             border-radius: 30px;
@@ -202,23 +216,42 @@
 
         .playbox{
             display: flex;
-            flex-direction: column;
+
             align-items: center;
-            width: 90%;
-            margin-top:20px;
+            width: 100%;
+            margin-top:10px;
         }
-        .controls button {
-            font-size: 1.5em;
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 버튼 간 간격 */
+            margin-top:-20px;
+        }
+        /* 버튼 크기 조정 */
+        .control-btn {
+
             background: none;
             border: none;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px; /* 내부 여백 */
+            border-radius: 50%; /* 둥근 버튼을 원형으로 설정 */
+        }
+
+        /* 아이콘 크기 조정 */
+        .control-btn img.icon {
+            width: 22px; /* 아이콘 너비 */
+            height: 22px; /* 아이콘 높이 */
         }
 
         .progress {
-            margin-left:50px;
             display: flex;
             align-items: center;
+            justify-content: center;
             width:100%;
+            margin-top:-20px;
             
         }
 
@@ -227,7 +260,34 @@
             width: 85%;
 
         }
-        
+
+        .progress h4{
+            font-size:13px;
+            font-weight: 100;
+        }
+        .playlist-btn{
+            width:120px;
+            height: 40px;
+            border: none;
+            border-radius: 30px;
+            background-color: #03ABFF;
+            color:white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px; /* 아이콘과 텍스트 간격 */
+            cursor: pointer;
+            
+        }
+        .playlist-btn img.icon {
+            width: 17px; /* 아이콘 크기 */
+            height: 17px;
+            display: inline-block;
+        }
+
+
+                
     </style>
     
     
@@ -261,63 +321,90 @@
             <h3>추천 플레이리스트</h3>
             <ul id="recommendation-list">
                 <li>
-                    <span>🎵 Welcome to the Show - DAY6</span>
-                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
-
-                </li>
-                <li>
-                    <span>🎵 Blue Moon - 엔플라잉 (N.Flying)</span>
-                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
-
-                </li>
-                <li>
-                    <span>🎵 우주를 줄게 - 볼빨간사춘기</span>
-                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
-
-                </li>
-                <li>
-                    <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
-
-                </li>
-                <li>
-                    <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
-
-                </li>
-                <li>
-                    <span>🎵 Happy - DAY6</span>
-                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
-
-                </li>
-                <li>
-                    <span>🎵 Happy - DAY6</span>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Welcome to the Show - DAY6</span>
                     <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
                 </li>
                 <li>
-                    <span>🎵 Happy - DAY6</span>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Blue Moon - 엔플라잉 (N.Flying)</span>
                     <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
                 </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>우주를 줄게 - 볼빨간사춘기</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span>Happy - DAY6</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                </li>
+                
             </ul>
+            
+            
         </section>
 
         <footer class="player">
-            <div class="now-playing">
-                <h3>HAPPY</h3>
-                <h4>DAY6</h4>
-            </div>
             <div class="playbox">
+                <div class="now-playing">
+                    <h3>HAPPY</h3>
+                    <h4>DAY6</h4>
+                </div>
                 <div class="progress">
                     <h4>0:20</h4>
                     <input type="range" min="0" max="100" value="20">
                     <h4>2:56</h4>
                 </div>
-                <div class="controls">
-                    <button>⏮️</button>
-                    <button>⏯️</button>
-                    <button>⏭️</button>
-                </div>
+                <button class="playlist-btn">
+                    <img src="img/whitenote.png" alt="음표 아이콘" class="icon">
+                    둠칫둠칫
+                </button>
             </div>
+            <div class="controls">
+                <button class="control-btn" id="prev-btn">
+                    <img src="img/previous.png" alt="이전" class="icon">
+                </button>
+                <button class="control-btn" id="play-btn">
+                    <img src="img/play.png" alt="재생" class="icon">
+                </button>
+                <button class="control-btn" id="next-btn">
+                    <img src="img/next.png" alt="다음" class="icon">
+                </button>
+            </div>
+            
+          
         </footer>
     </main>
     <script>
@@ -332,6 +419,25 @@
                 const isClicked = button.classList.toggle('clicked');
                 button.style.backgroundImage = `url(${isClicked ? clickedUrl : defaultUrl})`;
             });
+        });
+
+        const playButton = document.getElementById('play-btn');
+        const playIcon = playButton.querySelector('img');
+
+        // 초기 상태: play.png
+        let isPlaying = false;
+
+        playButton.addEventListener('click', () => {
+            if (isPlaying) {
+                // 멈춤 상태로 변경 (play.png로 아이콘 변경)
+                playIcon.src = 'img/play.png';
+                playIcon.alt = '재생';
+            } else {
+                // 재생 상태로 변경 (stop.png로 아이콘 변경)
+                playIcon.src = 'img/stop.png';
+                playIcon.alt = '멈춤';
+            }
+            isPlaying = !isPlaying; // 상태 전환
         });
     </script>
     
