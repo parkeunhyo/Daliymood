@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAILY MOOD</title>
+    <style>
+        @font-face {
+            font-family: 'NanumSquareNeo'; /* 폰트 이름 */
+            src: url('fonts/NanumSquareNeo-aLt.woff2') format('truetype'); /* 폰트 경로 */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'NanumSquareNeo';
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(to right, #DCF6FF, #02ABFF);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            height: 100px;
+        }
+
+        .logo img {
+            height: 50px; 
+            width: auto; 
+            cursor: pointer;
+        }
+
+        .btn{
+            border:none;
+            background-color: transparent;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .separator {
+            color: white; /* 구분자 색상 */
+            font-size: 15px;
+            margin-right: 10px;
+            margin-left:10px;
+        }
+
+        .playlist {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            display: flex;
+            justify-content: space-between; /* 좌우 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            border-bottom: 2px solid #0EAFFF; /* 하단 경계선 */
+            margin-bottom: 10px;
+
+        }
+        
+        .title-left {
+            display: flex; /* 왼쪽 아이콘과 텍스트 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+        }
+        .folder-icon{
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+
+        }
+
+        .play-btn{
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 30px;
+
+        }
+        .playlist h3 {
+            font-size: 20px;
+            font-weight: 100;
+            margin-top:5px;
+            margin-bottom: 10px;
+            cursor: default;
+            
+        }
+
+        .playlist ul {
+            list-style: none;
+            padding: 0;
+            max-height: 340px; /* 최대 높이 */
+            overflow-y: auto; /* 스크롤 표시 */
+            scrollbar-width: thin; /* 스크롤바 두께 */
+            scrollbar-color: #ccc #ffffff; /* 스크롤바 색상 */
+        }
+        .playlist ul::-webkit-scrollbar {
+            width: 10px; /* 스크롤바 너비 */
+           
+        }
+        
+        .playlist ul::-webkit-scrollbar-thumb {
+            background-color: #ccc; /* 스크롤바 색상 */
+            border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+        }
+
+        .playlist li {
+            width: 98%;
+            display: flex;
+            align-items: center; /* 수직 정렬을 가운데로 */
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1.5px dotted #CACACA;
+        }
+        
+        .playlist li span {
+            text-align: left; /* 텍스트를 왼쪽 정렬 */
+            flex: 1; /* 남은 공간을 차지하도록 설정 */
+        }
+        /* 음표 아이콘 스타일 */
+        .note-icon {
+            width: 17px; /* 아이콘 너비 */
+            height: 20px; /* 아이콘 높이 */
+            margin-right: 10px; /* 텍스트와의 간격 */
+            vertical-align: middle; /* 텍스트와 수직 정렬 */
+        }
+        
+        .player {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%); /* 자기 자신의 너비의 절반만큼 왼쪽으로 이동 */
+            width: 85%;
+            height: 70px;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            border-radius: 30px;
+            border: 1px solid #C8C8C8;
+
+        }
+
+        .now-playing {
+            font-weight: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .now-playing h3{
+            font-size: 20px;
+            font-weight: 100;
+            margin-bottom: 5px;
+        }
+
+        .now-playing h4{
+            font-size: 15px;
+            font-weight: 100;
+        }
+
+        .playbox{
+            display: flex;
+
+            align-items: center;
+            width: 100%;
+            margin-top:10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 버튼 간 간격 */
+            margin-top:-20px;
+        }
+        /* 버튼 크기 조정 */
+        .control-btn {
+
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px; /* 내부 여백 */
+            border-radius: 50%; /* 둥근 버튼을 원형으로 설정 */
+        }
+
+        /* 아이콘 크기 조정 */
+        .control-btn img.icon {
+            width: 22px; /* 아이콘 너비 */
+            height: 22px; /* 아이콘 높이 */
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width:100%;
+            margin-top:-20px;
+            
+        }
+
+        .progress input[type="range"] {
+            margin: 0 10px;
+            width: 85%;
+
+        }
+
+        .progress h4{
+            font-size:13px;
+            font-weight: 100;
+        }
+        .playlist-btn{
+            width:120px;
+            height: 40px;
+            border: none;
+            border-radius: 30px;
+            background-color: #03ABFF;
+            color:white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px; /* 아이콘과 텍스트 간격 */
+            cursor: pointer;
+            
+        }
+        .playlist-btn img.icon {
+            width: 17px; /* 아이콘 크기 */
+            height: 17px;
+            display: inline-block;
+        }
+        .delete-btn{
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo.png" alt="DAILY MOOD 로고" id="logo"/>
+        </div>
+        <nav>
+            <button class="btn" id="signup-btn">플레이리스트</button>
+            <span class="separator">|</span>
+            <button class="btn" id="logout-btn">로그아웃</button>
+        </nav>
+    </header>
+    <main>
+        <h3 style="margin:50px 0 0 10%" >플레이리스트 </h3>
+        <section class="playlist">
+            <div class="title">
+                <div class="title-left">
+                    <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
+                    <h3>둠칫둠칫</h3>
+                </div>
+                <button class="play-btn">플레이리스트 재생</button>
+            </div>
+            
+            <ul id="recommendation-list">
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Welcome to the Show - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Blue Moon - 엔플라잉 (N.Flying)</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">우주를 줄게 - 볼빨간사춘기</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                    
+                </li>
+                <li>
+                    <img src="img/note.png" alt="음표 아이콘" class="note-icon">
+                    <span style="cursor: pointer;">Happy - DAY6</span>
+                    <button class="delete-btn" >삭제</button>
+                </li>
+                
+            </ul>
+            
+            
+        </section>
+
+        <footer class="player">
+            <div class="playbox">
+                <div class="now-playing">
+                    <h3>HAPPY</h3>
+                    <h4>DAY6</h4>
+                </div>
+                <div class="progress">
+                    <h4>0:20</h4>
+                    <input type="range" min="0" max="100" value="20">
+                    <h4>2:56</h4>
+                </div>
+                <button class="playlist-btn">
+                    <img src="img/whitenote.png" alt="음표 아이콘" class="icon">
+                    둠칫둠칫
+                </button>
+            </div>
+            <div class="controls">
+                <button class="control-btn" id="prev-btn">
+                    <img src="img/previous.png" alt="이전" class="icon">
+                </button>
+                <button class="control-btn" id="play-btn">
+                    <img src="img/play.png" alt="재생" class="icon">
+                </button>
+                <button class="control-btn" id="next-btn">
+                    <img src="img/next.png" alt="다음" class="icon">
+                </button>
+            </div>
+            
+          
+        </footer>
+    </main>
+    
+<script>
+            document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('logout-btn').addEventListener('click', function () {
+                window.location.href = 'login.html'; // signup.html로 이동
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('logo').addEventListener('click', function () {
+                window.location.href = 'index.html'; // signup.html로 이동
+            });
+        });
+</script>
+</body>
+
+</html>
