@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: 'NanumSquareNeo'; /* 폰트 이름 */
-            src: url('fonts/NANUMSQUARENEO-VARIABLE.TTF') format('truetype'); /* 폰트 경로 */
+            src: url('fonts/NanumSquareNeo-aLt.woff2') format('truetype'); /* 폰트 경로 */
             font-weight: normal;
             font-style: normal;
         }
@@ -41,7 +41,7 @@
             font-weight: 900;
             color: #03ABFF;
             gap: 20px; 
-            padding-top:30px;
+            padding-top: 30px;
         }
 
         .login-container {
@@ -68,12 +68,12 @@
             color: #757575;
         }
         
-        .input-wrapper{
+        .input-wrapper {
             width: 100%;
-            position:relative;
-            margin-left:30px;
-            
+            position: relative;
+            margin-left: 30px;
         }
+
         .duplicate-btn {
             height: 40px;
             position: absolute; 
@@ -88,10 +88,11 @@
             padding: 5px 10px;
             cursor: pointer;
         }
-        .signup-btn{
+
+        .signup-btn {
             background-color: #03ABFF;
-            color:white;
-            font-size:20px;
+            color: white;
+            font-size: 20px;
             font-weight: bold;
             width: 90%;
             height: 60px;
@@ -101,31 +102,22 @@
             margin: 15px 0 10px;
             cursor: pointer;
         }
-
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('signup-btn').addEventListener('click', function () {
-                window.location.href = 'signup.html'; // signup.html로 이동
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="box">
         <div>DAILY MOOD</div> 
-        <div class="login-container">
+        <form action="signup_proc.php" method="POST" class="login-container">
             <div class="input-wrapper">
-                <input type="text" class="input-field" placeholder="아이디">
-                <button class="duplicate-btn">중복 확인</button>
+                <input type="text" class="input-field" name="user_id" placeholder="아이디" required>
+                <button type="button" class="duplicate-btn">중복 확인</button>
             </div>
-            <input type="password" class="input-field" placeholder="비밀번호">
-            <input type="text" class="input-field" placeholder="비밀번호 확인">
-            <input type="password" class="input-field" placeholder="이름">
-            <input type="text" class="input-field" placeholder="전화번호">
-            <button class="signup-btn">회원가입</button>
-
-        </div>
+            <input type="password" class="input-field" name="password" placeholder="비밀번호" required>
+            <input type="password" class="input-field" name="password_confirm" placeholder="비밀번호 확인" required>
+            <input type="text" class="input-field" name="name" placeholder="이름" required>
+            <input type="text" class="input-field" name="phone" placeholder="전화번호" required>
+            <button type="submit" class="signup-btn">회원가입</button>
+        </form>
     </div>
 </body>
 </html>

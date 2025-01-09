@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: 'NanumSquareNeo'; /* 폰트 이름 */
-            src: url('fonts/NANUMSQUARENEO-VARIABLE.TTF') format('truetype'); /* 폰트 경로 */
+            src: url('fonts/NanumSquareNeo-aLt.woff2') format('truetype'); /* 폰트 경로 */
             font-weight: normal;
             font-style: normal;
         }
@@ -41,7 +41,7 @@
             font-weight: 900;
             color: #03ABFF;
             gap: 20px; 
-            padding-top:30px;
+            padding-top: 30px;
         }
 
         .login-container {
@@ -67,10 +67,10 @@
             outline: none;
             color: #757575;
         }
-        .login-btn{
+        .login-btn {
             background-color: #03ABFF;
-            color:white;
-            font-size:20px;
+            color: white;
+            font-size: 20px;
             font-weight: bold;
             width: 90%;
             height: 60px;
@@ -80,45 +80,38 @@
             margin: 15px 0 10px;
             cursor: pointer;
         }
-        .button-container{
-            display:flex;
+        .button-container {
+            display: flex;
         }
-        .btn{
-            margin-right:10px;
-            border:none;
+        .btn {
+            margin-right: 10px;
+            border: none;
             background-color: white;
             cursor: pointer;
             color: #757575;
         }
         .separator {
-            color: #a5a5a5; /* 구분자 색상 */
+            color: #a5a5a5;
             font-size: 10px;
             margin-right: 10px;
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('signup-btn').addEventListener('click', function () {
-                window.location.href = 'signup.html'; // signup.html로 이동
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="box">
         <div>DAILY MOOD</div> 
-        <div class="login-container">
-            <input type="text" class="input-field" placeholder="아이디">
-            <input type="password" class="input-field" placeholder="비밀번호">
-            <button class="login-btn">로그인</button>
+        <form action="login_proc.php" method="POST" class="login-container">
+            <input type="text" class="input-field" name="user_id" placeholder="아이디" required>
+            <input type="password" class="input-field" name="password" placeholder="비밀번호" required>
+            <button type="submit" class="login-btn">로그인</button>
             <div class="button-container">
-                <button class="btn">아이디 찾기</button>
+                <button type="button" class="btn">아이디 찾기</button>
                 <span class="separator">|</span>
-                <button class="btn">비밀번호 찾기</button>
+                <button type="button" class="btn">비밀번호 찾기</button>
                 <span class="separator">|</span>
-                <button class="btn" id="signup-btn">회원가입</button>
+                <button type="button" class="btn" id="signup-btn" onclick="location.href='signup.html'">회원가입</button>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 </html>

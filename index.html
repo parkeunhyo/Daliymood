@@ -380,7 +380,7 @@
             <img src="img/logo.png" alt="DAILY MOOD 로고" id="logo"/>
         </div>
         <nav>
-            <button class="btn" id="signup-btn">플레이리스트</button>
+            <button class="btn" id="playlist">플레이리스트</button>
             <span class="separator">|</span>
             <button class="btn" id="logout-btn">로그아웃</button>
         </nav>
@@ -591,7 +591,13 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('logo').addEventListener('click', function () {
-                window.location.href = 'index.html'; // signup.html로 이동
+                window.location.href = 'index.html'; 
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('playlist').addEventListener('click', function () {
+                window.location.href = 'playlist.html'; 
             });
         });
 
