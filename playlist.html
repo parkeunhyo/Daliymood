@@ -54,6 +54,12 @@
             margin-right: 10px;
             margin-left: 10px;
         }
+        .separator2 {
+            color: black;
+            font-size: 15px;
+            margin-right: 5px;
+            margin-left: 15px;
+        }
 
         .container {
             margin: 10px auto; /* 가운데 정렬 */
@@ -78,32 +84,42 @@
 
         .playlist{
             width: 80%;
+            height: 210px;
             margin: 20px auto;
             padding: 20px;
             background: white;
             border-radius: 30px;
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 50px;
+
+        }
+        .playlist2{
+            width: 80%;
+            height: 210px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 50px;
+            display:none;
+
         }
 
-        .playlist-actions {
+        .delete-btn, .add-btn{
+            background-color: transparent;
+            border: none;
             font-size: 16px;
-            color: #666;
-            cursor: pointer;
-            text-align: right; /* 오른쪽 정렬 */
-        }
-
-        .playlist-actions {
-            color: #666;
+            margin-right:-10px;
             cursor: pointer;
         }
 
         .folder-container {
             display: flex;
             gap: 40px;
-            overflow-x: auto;
             padding-bottom: 10px;
             justify-content: left;
+            margin-left:30px;
         }
 
         .folder {
@@ -150,8 +166,48 @@
             font-weight: 100;
         }
 
-        .new-folder {
-            opacity: 0.5;
+        .input-container {
+            position: relative;
+            margin-right: 0px;
+            width: 90%;
+            color:#333;
+            margin-bottom:-10px;
+        }
+        
+        .input-container input {
+            width: 100%;
+            height: 30px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size:14px;
+            margin-top:10px;
+            color:#333;
+            font-weight:100;
+            text-align: center;
+        }
+
+        .folder-name-input {
+            width: 100%;
+            height: 30px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #333;
+            font-weight: 100;
+            text-align: center;
+            background-color: transparent; /* 배경 투명 */
+            outline: none; /* 포커스 아웃라인 제거 */
+            cursor: pointer; /* 읽기 전용일 때 포인터 변경 */
+        }
+
+        .folder-name-input:focus {
+            cursor: text; /* 포커스 시 텍스트 커서 */
+            background-color: white; /* 포커스 시 배경 변경 */
         }
 
         .player {
@@ -242,6 +298,28 @@
             font-weight: 100;
         }
 
+        .playlist-btn{
+            width:120px;
+            height: 40px;
+            border: none;
+            border-radius: 30px;
+            background-color: #03ABFF;
+            color:white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px; /* 아이콘과 텍스트 간격 */
+            cursor: pointer;
+            
+        }
+        .playlist-btn img.icon {
+            width: 17px; /* 아이콘 크기 */
+            height: 17px;
+            display: inline-block;
+        }
+
+
     </style>
 </head>
 <body>
@@ -258,84 +336,20 @@
     <main>
         <div class="playlist-header">
             <h3 style="margin-left:-20px">플레이리스트</h3>
-            <span class="playlist-actions">삭제 | 추가</span>
-        </div>
-        <div class="playlist">
-            <div class="folder-container">
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>둠칫둠칫</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>비오는날</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>행복할때</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>슬플때</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>슬플때</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>슬플때</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>슬플때</span>
-                    </div>
-                </div>
+            <div class="playlist-actions">
+                <button class="delete-btn" id="delete">삭제</button>
+                <span class="separator2">|</span>
+                <button class="add-btn" id="add">추가</button>
             </div>
         </div>
         <div class="playlist">
             <div class="folder-container">
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>둠칫둠칫</span>
-                    </div>
-                </div>
-                <div class="folder-wrapper">
-                    <input type="checkbox" class="folder-checkbox">
-                    <div class="folder">
-                        <img src="img/folder.png" alt="폴더" id="list">
-                        <span>비오는날</span>
-                    </div>
-                </div>
-                <div class="folder new-folder">
-                    <img src="img/newfolder.png" alt="새 폴더">
-                    <span>이름을 입력해주세요</span>
-                </div>
             </div>
         </div>
-
+        <div class="playlist2">
+            <div class="folder-container">
+            </div>
+        </div>
         <div class="player">
             <div class="player-header">
                 <span>HAPPY - DAY6</span>
@@ -377,8 +391,6 @@
                     <img src="img/next.png" alt="다음" class="icon">
                 </button>
             </div>
-            
-        
         </footer>
     </main>
     <script>
@@ -424,6 +436,210 @@
             }
             isPlaying = !isPlaying; // 상태 전환
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const addButton = document.getElementById('add'); // "추가" 버튼
+            const playlistContainer1 = document.querySelector('.playlist .folder-container');
+            const playlistContainer2 = document.querySelector('.playlist2 .folder-container');
+            const playlist2 = document.querySelector('.playlist2');
+
+            addButton.addEventListener('click', function () {
+                const folderCount1 = playlistContainer1.children.length;
+                const folderCount2 = playlistContainer2.children.length;
+
+                // 최대 폴더 개수 확인
+                if (folderCount1 + folderCount2 >= 14) {
+                    alert('최대 폴더는 14개입니다.');
+                    return;
+                }
+
+                const newFolder = document.querySelector('.new-folder');
+                // 폴더가 이미 존재하는지 확인
+                if (newFolder) {
+                    const parentContainer = newFolder.closest('.folder-container');
+                    parentContainer.removeChild(newFolder);
+                } else {
+                    // 새 폴더 생성
+                    const newFolderElement = document.createElement('div');
+                    newFolderElement.className = 'folder-wrapper new-folder';
+                    newFolderElement.innerHTML = `
+                        <div class="folder">
+                            <img src="img/newfolder.png" alt="새 폴더">
+                            <div class="input-container">
+                                <input type="text" placeholder="감정을 입력하세요">
+                            </div>
+                        </div>
+                    `;
+
+                    // 폴더 추가 위치 결정 (playlist2에 추가될지 확인)
+                    if (playlistContainer1.children.length < 7) {
+                        playlistContainer1.appendChild(newFolderElement);
+                    } else {
+                        playlist2.style.display = 'block'; // playlist2 표시
+                        playlistContainer2.appendChild(newFolderElement);
+                    }
+
+                    // 새로 생성된 입력 필드에 포커스 설정
+                    const inputField = newFolderElement.querySelector('input');
+                    inputField.focus();
+
+                    // Blur 이벤트 추가
+                    inputField.addEventListener('blur', function () {
+                        handleFolderCreation(inputField, newFolderElement);
+                    });
+                }
+            });
+
+            // Enter 키 이벤트 처리
+            document.addEventListener('keydown', function (event) {
+                if (
+                    event.target.tagName === 'INPUT' &&
+                    event.target.parentElement.classList.contains('input-container') &&
+                    event.key === 'Enter' &&
+                    event.target.value.trim() !== ''
+                ) {
+                    handleFolderCreation(event.target);
+                }
+            });
+
+            function handleFolderCreation(inputField, folderElement) {
+            const folderName = inputField.value.trim(); // 입력된 텍스트 가져오기
+
+            if (folderName === '') {
+                // 입력값이 없으면 해당 폴더를 포함하는 부모 컨테이너에서 삭제
+                const folderContainer = folderElement.closest('.folder-container'); // 폴더가 속한 컨테이너 선택
+                if (folderContainer) {
+                    folderContainer.removeChild(folderElement); // 컨테이너에서 해당 폴더 삭제
+                }
+            } else {
+                // 입력값이 있을 경우 폴더 저장
+                const folderWrapper = inputField.closest('.new-folder');
+                folderWrapper.classList.remove('new-folder');
+                folderWrapper.classList.add('folder-wrapper');
+                folderWrapper.innerHTML = `
+                    <input type="checkbox" class="folder-checkbox">
+                    <div class="folder">
+                        <img src="img/folder.png" alt="폴더">
+                        <input type="text" class="folder-name-input" value="${folderName}" readonly>
+                    </div>
+                `;
+
+                // 폴더명을 수정할 수 있도록 클릭 이벤트 추가
+                const folderNameInput = folderWrapper.querySelector('.folder-name-input');
+                folderNameInput.addEventListener('click', function () {
+                    enableFolderNameEditing(folderNameInput);
+                });
+            }
+        }
+
+
+        let isProcessing = false; // 이벤트 중복 방지 플래그
+
+        function saveFolderName(inputElement) {
+            if (isProcessing) return; // 중복 실행 방지
+            isProcessing = true; // 이벤트 처리 시작
+
+            const newValue = inputElement.value.trim(); // 입력 값 가져오기
+
+            if (newValue === '') {
+                alert('폴더명을 입력해주세요.'); // 경고 창 띄우기
+                setTimeout(() => {
+                    inputElement.focus(); // 경고 창 확인 후 입력 필드로 포커스 이동
+                    isProcessing = false; // 이벤트 처리 종료
+                }, 0);
+                return; // 함수 종료
+            }
+
+            // 입력값이 있을 경우, 읽기 전용 및 스타일 업데이트
+            inputElement.readOnly = true;
+            inputElement.style.cursor = 'pointer';
+
+            // `blur` 이벤트 제거
+            inputElement.removeEventListener('blur', handleBlur);
+
+            isProcessing = false; // 이벤트 처리 종료
+        }
+
+        function handleBlur(event) {
+            saveFolderName(event.target);
+        }
+
+        function enableFolderNameEditing(inputElement) {
+            // 기존 `blur` 이벤트 제거 (중복 방지)
+            inputElement.removeEventListener('blur', handleBlur);
+
+            // 수정 가능하도록 설정
+            inputElement.readOnly = false;
+            inputElement.style.cursor = 'text';
+            inputElement.focus(); // 포커스 이동
+
+            // `blur` 이벤트 추가 (한 번만 실행되도록 설정)
+            inputElement.addEventListener('blur', handleBlur);
+
+            // `Enter` 키를 눌렀을 때도 저장 가능하도록 이벤트 추가
+            inputElement.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    saveFolderName(inputElement);
+                }
+            });
+        }
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const deleteButton = document.getElementById('delete'); // 삭제 버튼
+    const playlistContainer1 = document.querySelector('.playlist .folder-container');
+    const playlistContainer2 = document.querySelector('.playlist2 .folder-container');
+    const playlist2 = document.querySelector('.playlist2');
+
+    deleteButton.addEventListener('click', function () {
+        // 모든 체크된 폴더 체크박스를 선택
+        const checkedFolders = document.querySelectorAll('.folder-checkbox:checked');
+        
+        if (checkedFolders.length === 0) {
+            alert('삭제할 폴더를 선택하세요.'); // 체크된 폴더가 없으면 알림
+            return;
+        }
+
+        // 체크된 폴더들을 순회하면서 삭제
+        checkedFolders.forEach(folderCheckbox => {
+            const folderWrapper = folderCheckbox.closest('.folder-wrapper'); // 폴더의 최상위 요소
+            if (folderWrapper) {
+                folderWrapper.remove(); // 폴더 제거
+            }
+        });
+
+        // 삭제 후 playlist2의 항목을 playlist1으로 이동
+        moveFoldersToPlaylist1();
+    });
+
+    function moveFoldersToPlaylist1() {
+        const folderCount1 = playlistContainer1.children.length;
+
+        // playlist1에 추가 가능한 공간 계산
+        const availableSpace = 7 - folderCount1;
+
+        if (availableSpace > 0) {
+            // playlist2에서 이동할 폴더 선택
+            const foldersToMove = Array.from(playlistContainer2.children).slice(0, availableSpace);
+
+            // 폴더 이동
+            foldersToMove.forEach(folder => {
+                playlistContainer1.appendChild(folder);
+            });
+        }
+
+        // playlist2가 비어있으면 숨김
+        if (playlistContainer2.children.length === 0) {
+            playlist2.style.display = 'none';
+        }
+    }
+});
+
+
+
+
+
     </script>
 </body>
 </html>
