@@ -601,6 +601,70 @@
             });
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const accessToken = localStorage.getItem('spotifyAccessToken');
+            if (!accessToken) {
+                alert('스포티파이 로그인 필요');
+                window.location.href = 'index2.html';
+                return;
+            }
+        
+            // 검색 버튼 클릭 이벤트
+            document.getElementById('recommend-btn').addEventListener('click', () => {
+                const query = document.querySelector('.input-container input').value.trim();
+                if (query) {
+                    searchSpotify(query, accessToken);
+                } else {
+                    alert('검색어를 입력하세요.');
+                }
+            });
+        });
+        async function searchSpotify(query, accessToken) {
+            try {
+                const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Spotify API 호출 실패');
+                }
+        
+                const data = await response.json();
+                displaySearchResults(data.tracks.items);
+            } catch (error) {
+                console.error('Spotify 검색 중 오류:', error);
+                alert('검색 중 오류가 발생했습니다.');
+            }
+        }
+        function displaySearchResults(tracks) {
+            const recommendationList = document.getElementById('recommendation-list');
+            recommendationList.innerHTML = ''; // 기존 리스트 초기화
+        
+            tracks.forEach(track => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <img src="${track.album.images[0]?.url || 'img/note.png'}" alt="음표 아이콘" class="note-icon">
+                    <span>${track.name} - ${track.artists.map(artist => artist.name).join(', ')}</span>
+                    <button class="heart-btn" data-url="img/heart.png" data-clicked-url="img/aheart.png"></button>
+                `;
+                recommendationList.appendChild(listItem);
+            });
+        
+            // 하트 버튼 이벤트 추가
+            const heartButtons = document.querySelectorAll('.heart-btn');
+            heartButtons.forEach(button => {
+                const defaultUrl = button.getAttribute('data-url');
+                const clickedUrl = button.getAttribute('data-clicked-url');
+                button.style.backgroundImage = `url(${defaultUrl})`;
+        
+                button.addEventListener('click', () => {
+                    const isClicked = button.classList.toggle('clicked');
+                    button.style.backgroundImage = `url(${isClicked ? clickedUrl : defaultUrl})`;
+                });
+            });
+        }
     </script>
     
 </body>

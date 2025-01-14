@@ -3,130 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist UI</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #4e4e4e;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .myplaylist-container {
-            background-color: #EFEFEF;
-            width: 800px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .myplaylist-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: -10px 0 0px 10px;
-            border-bottom: 1px solid #CACACA
-        }
-
-        .myplaylist-header .icon {
-            margin-right: 8px;
-        }
-
-        .myplaylist-header .title {
-            display: flex;
-            align-items: center;
-        }
-
-        .myplaylist-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .myplaylist-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px dashed #CACACA;
-            cursor: pointer;
-        }
-
-        .myplaylist-item:hover {
-            background-color: white;
-        }
-
-        .folder-icon {
-            width:20px;
-            margin-right: 12px;
-        }
-
-        .scrollbar {
-            max-height: 150px;
-            overflow-y: auto;
-            scrollbar-width: thin; /* 스크롤바 두께 */
-            scrollbar-color: #ccc #f8f9fa; /* 스크롤바 색상 */
-        }
-
-
-        .title h3{
-          font-size:20px;
-          font-weight:100;
-          margin-right: 20px;
-        }
-
-    </style>
+    <title>Spotify Login</title>
 </head>
 <body>
-    <div class="myplaylist-container">
-        <div class="myplaylist-header">
-            <div class="title">
-                <h3>플레이리스트 추가 | </h3>
-                <img src="img/note.png" alt="음표 아이콘" class="note-icon">
-                <h3>Welcome to the Show - DAY6</h3>
-            </div>
-            
-        </div>
-        <div class="scrollbar">
-            <ul class="myplaylist-list">
-                <li class="myplaylist-item">
-                    <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                    둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-                <li class="myplaylist-item">
-                  <img src="img/folder.png" alt="폴더 아이콘" class="folder-icon">
-                  둠칫둠칫
-                </li>
-            </ul>
-        </div>
-    </div>
+    <h1>Spotify Login (Implicit Grant Flow)</h1>
+    <button id="loginButton">Log in with Spotify</button>
+    <div id="tokenInfo"></div>
+
+    <script>
+        const clientId = 'ee877548729c4fbdb0a1f0776b95de7b'; // 스포티파이 Client ID 입력
+        const redirectUri = 'http://pyp2024.dothome.co.kr/index2.html'; // 닷홈에서 사용할 리디렉션 URI
+        const scopes = [
+            'playlist-modify-private',
+            'playlist-modify-public',
+            'user-library-read',
+            'user-library-modify',
+        ];
+
+        // 로그인 버튼 클릭 시 Spotify로 리디렉션
+        document.getElementById('loginButton').addEventListener('click', () => {
+            const authEndpoint = 'https://accounts.spotify.com/authorize';
+            const authUrl = `${authEndpoint}?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes.join(' '))}`;
+            window.location.href = authUrl; // Spotify 로그인 페이지로 이동
+        });
+
+        // URL에서 Access Token 추출
+        function getAccessTokenFromUrl() {
+            const hash = window.location.hash;
+            if (hash) {
+                const params = new URLSearchParams(hash.substring(1));
+                return params.get('access_token');
+            }
+            return null;
+        }
+
+        // Access Token 표시
+        const accessToken = getAccessTokenFromUrl();
+        if (accessToken) {
+            document.getElementById('tokenInfo').innerHTML = `
+                <h3>Access Token:</h3>
+                <p>${accessToken}</p>
+                <p>Now you can use the Spotify API with this token!</p>
+            `;
+        }
+    </script>
 </body>
 </html>
